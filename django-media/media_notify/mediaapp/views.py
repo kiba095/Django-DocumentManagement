@@ -28,7 +28,7 @@ def approve_document(request,doc_id):
     document = get_object_or_404(MediaFile,id=doc_id)
     document.status = 'approved'
     document.save()
-    messages.success(request,"You Document has been approved successfully.")
+    messages.success(request,"The Document has been approved successfully.")
     return redirect(reverse("admin:mediaapp_mediafile_changelist"))
 
 @login_required
@@ -37,5 +37,5 @@ def reject_document(request,doc_id):
     document = get_object_or_404(MediaFile,id=doc_id)
     document.status = 'rejected'
     document.save()
-    messages.error(request,"Your Document has been rejected.")
+    messages.error(request,"The Document has been rejected.")
     return redirect(reverse("admin:mediaapp_mediafile_changelist"))

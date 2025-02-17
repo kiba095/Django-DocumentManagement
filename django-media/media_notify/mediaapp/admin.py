@@ -19,7 +19,6 @@ class NotificationAdmin(admin.ModelAdmin):
     def changelist_view(self,request,extra_context=None):
         # Show notifications as Django admin messages
         notifications = Notification.objects.filter(recipient=request.user,is_read=False)
-
         if notifications.exists():
             for note in notifications:
                 '''display green or red box if the file is approve/rejected'''
@@ -35,16 +34,22 @@ admin.site.register(Notification,NotificationAdmin)
 
 
 class MediaFileAdmin(admin.ModelAdmin):
-    #list_display = ('title','file','user','status','uploaded_at',"show_url")
-    list_display = ('title','user','status','uploaded_at',"show_document")
     list_filter = ('status',)
     #actions = ['approve_files','reject_files']
+
+    def get_list_display(self, request):
+        default_fields = ('title','user','status','uploaded_at',)
+        group_specific_fields = ('show_document',)
+
+        if request.user.groups.filter(name="admin_group").exists():
+            return default_fields + group_specific_fields
+        return default_fields
+
 
     def approve_files(self,request,queryset):
         queryset.update(status='approved')
         for media in queryset:
             messages.success(request,f"Approved: {media.file.name}")
-
 
     def reject_files(self,request,queryset):
         queryset.update(status='rejected')
@@ -52,16 +57,14 @@ class MediaFileAdmin(admin.ModelAdmin):
             messages.error(request,f"Rejected: {media.file.name}")
 
     def get_readonly_fields(self,request,obj=None):
-        if not request.user.groups.filter(name="admin_group").exists():
+        if not request.user.groups.filter(name="admin_group").exists() or not request.user.is_superuser:
         #if not request.user.is_superuser:
             return ["status","remarks","user",]
-        #if request.user.groups.filter(name="admin_group").exists():
-            #return ["title","content","user","media_type"]
         return []
  
     def get_exclude(self,request,obj=...):
         '''Hide for non-superusers'''
-        if not request.user.groups.filter(name="admin_group").exists():
+        if not request.user.groups.filter(name="admin_group").exists() or not request.user.is_superuser:
         #if not request.user.is_superuser:
             return ('user',)
         return super().get_exclude(request,obj)
@@ -69,7 +72,9 @@ class MediaFileAdmin(admin.ModelAdmin):
     
     def save_model(self,request:HttpRequest,obj,form,change):
         '''Automatically set the logged-in users username/foreighnkey before saving'''
-        #obj.status = 'pending' # redefault it to pending if the usermodifies the field
+        if not request.user.groups.filter(name="admin_group").exists() or not request.user.is_superuser:
+            if obj.status != 'pending':
+                obj.status = 'pending'
         if not obj.user:
             obj.user = request.user
         super().save_model(request,obj,form,change)
@@ -77,9 +82,7 @@ class MediaFileAdmin(admin.ModelAdmin):
     def get_queryset(self,request):
         '''Show records for respective user only except admin'''
         qs = super().get_queryset(request)
-
         if request.user.groups.filter(name="admin_group").exists() or request.user.is_superuser:
-        #if request.user.is_superuser:
             return qs
         return qs.filter(user=request.user)
     
