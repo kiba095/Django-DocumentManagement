@@ -30,7 +30,6 @@ class NotificationAdmin(admin.ModelAdmin):
                 note.is_read = True
                 note.save()
         return super().changelist_view(request,extra_context)
-admin.site.register(Notification,NotificationAdmin)
 
 
 class MediaFileAdmin(admin.ModelAdmin):
@@ -93,4 +92,8 @@ class MediaFileAdmin(admin.ModelAdmin):
     approve_files.short_description = "Approve selected media files"
     reject_files.short_description = "Reject selected media files"
 
+
+admin.site.register(Notification,NotificationAdmin)
 admin.site.register(MediaFile,MediaFileAdmin)
+
+

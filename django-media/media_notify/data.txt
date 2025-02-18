@@ -33,8 +33,7 @@ staff5 lisa soberano
 
 
 
-USECASE TAB-VERSION
-
+# usecase diagram
 Super Admin (Not included)
 
     User add
@@ -82,4 +81,52 @@ Committee Group
     Login/Logout 
     Update Own Password
 
+
+
+# sequence diagram
+@startuml
+
+actor Committee_Group
+participant "System" as System
+actor Principal
+
+Committee_Group -> System: Log In
+System -> Committee_Group: Authentication Successful
+
+Principal -> System: Log In
+System -> Principal: Authentication Successful
+
+Committee_Group -> System: Uploads Document
+System -> Principal: Sends Notification (New Document Uploaded)
+Principal -> System: Reviews Document
+
+alt Document Approved
+ Principal -> System: Approves Document
+ System -> Committee_Group: Sends Notification (Document Approved)
+else Document Rejected
+ Principal -> System: Rejects Document
+ System -> Committee_Group: Sends Notification (Document Rejected)
+
+@enduml
+
+
+#activity diagram
+@startuml
+start
+ :Commitee_Group Logs In;
+ :System Authenticates Commitee_Group;
+ :Commitee_Group Uploads Documents;
+ :System Notifies Principal;
+ :Principal Logs In;
+ :System Authenticates Principal;
+ :Principal Reviews Document;
+ if (Is Document Approved?) then (Yes)
+  :Approve;
+  :Notify Commitee_Group (Approved);
+ else (No)
+  :Reject;
+  :Notify Commitee_Group (Rejected);
+ endif
+ stop
+@enduml
 
