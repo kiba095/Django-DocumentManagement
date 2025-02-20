@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Form with Approve/Reject Buttons and Remarks</title>
+
+
+        {% load static %}
+        <script src="{% static 'static/../sample.js' %}"></script>
+        <script src="{% static 'static/../js/phaser.min.js' %}"></script>
+
+
+        {% if media.media_type == 'image' %}
+            <script>
+                document.addEventListener("DOMContentLoaded",function() {
+                    var config = {
+                        type: Phaser.AUTO,
+                        width: 730,
+                        height:800,
+                        parent: "game-container",
+                        backgroundColor: "#008CBA",
+                        scene: {
+                            preload:preload,
+                            create:create,
+                            update:update
+                        }
+                    };
+                    var game = new Phaser.Game(config);
+
+                    function preload() {
+                        this.load.image("pic","{{ media.file.url }}");
+                    }
+
+                    function create() {
+                        
+                        camera = this.cameras.main;
+
+                        image = this.add.image(400,300,"pic");
+
+                        image.setScale(1); 
+                        //image.displayWidth = image.width;
+                        //image.displayHeight = image.height;
+
+                        image.setOrigin(0.5,0.5);
+                        image.setPosition(this.cameras.main.centerX,this.cameras.main.centerY);
+
+                        image.setInteractive()
+                        this.input.setDraggable(image);
+
+                        this.input.on("drag",function(pointer,gameObject,dragX,dragY){
+                            gameObject.x = dragX;
+                            gameObject.y = dragY;
+                        });
+                        camera.setZoom(0.8);
+
+                        let lastClickTime = 0;
+                        let doubleClickDelay = 300;
+                        let holdTime = 1000;
+                        let holdTimer = null;
+
+                        image.on("pointerdown",function(){
+                            let currentTime = this.scene.time.now;
+
+                            //Double Click Check
+                            if(currentTime - lastClickTime < doubleClickDelay){
+                                camera.setZoom(camera.zoom / 1.2)
+                            }
+                            lastClickTime = currentTime
+
+                            //Long press Check
+                            holdTimer = this.scene.time.delayedCall(holdTime,function(){
+                                camera.setZoom(camera.zoom * 1.2)
+                            });
+                        
+                        });
+
+                        image.on("pointerup",function(){
+                            if(holdTimer) {
+                                holdTimer.remove();
+                                holdTimer = null;
+                            }
+                        })
+
+                    }
+                    function update() {
+                        //Game logic
+                    }
+                    function zoomIn() {
+                        camera.setZoom(camera.zoom * 1.2);
+                    }
+                    function zoomOut(){
+                        camera.setZoom(camera.zoom / 1.2);
+                    }
+                });
+            </script>
+        {% endif %}
+
+
+        <script>
+            function closeWindow() {
+                setTimeout(function() {
+                    window.close();
+                },500); // two seconds
+            }
+
+        </script>
+
+        <style>
+            table {
+                
+            }
+            #customers {
+              font-family: Arial, Helvetica, sans-serif;
+              border-collapse: collapse;
+              width: 55%;
+            }
+            
+            #customers td, #customers th {
+              border: 1px solid #ddd;
+              padding: 8px;
+            }
+            
+            #customers tr:nth-child(even){background-color: #f2f2f2;}
+            
+            #customers tr:hover {background-color: #ddd;}
+            
+            #customers th {
+                align:center;
+              padding-top: 12px;
+              padding-bottom: 12px;
+              text-align: left;
+              background-color: #008CBA;
+
+              color: yellow;
+            }
+            #customers td {
+                color:blue;
+            }
+            </style>
+
+        <style>
+            h3 {width: 55%;
+                font-family: Arial, Helvetica, sans-serif; 
+                padding-top: 10px;
+                padding-right: 10px;
+                padding-bottom: 10px;
+                padding-left: 10px;
+                
+            }
+            .dotted {border-style: dotted;}
+            .dashed {border-style: dashed;}
+            .solid {border-style: solid;}
+            .double {border-style: double;}
+            .groove {border-style: groove;}
+            .ridge {border-style: ridge;}
+            .inset {border-style: inset;}
+            .outset {border-style: outset;}
+            .none {border-style: none;}
+            .hidden {border-style: hidden;}
+            .mix {border-style: dotted dashed solid double;}
+            
+        </style>
+
+        <style> 
+            textarea {
+              width: 55%;
+              height: 150px;
+              padding: 12px 20px;
+              box-sizing: border-box;
+              border: 2px solid #ccc;
+              border-radius: 4px;
+              background-color: #f8f8f8;
+              font-size: 16px;
+              resize: none;
+            }
+        </style>
+
+        <style>
+            .button {
+              background-color: #04AA6D; /* Green */
+              border: none;
+              color: white;
+              padding: 15px 32px;
+              text-align: center;
+              text-decoration: none;
+              display: inline-block;
+              font-size: 16px;
+              margin: 4px 2px;
+              cursor: pointer;
+            }
+            
+            .button2 {background-color: #008CBA;} /* Blue */
+            .button3 {background-color: #f44336;} /* Red */ 
+            .button4 {background-color: #e7e7e7; color: black;} /* Gray */ 
+            .button5 {background-color: #555555;} /* Black */
+        </style>
+
+
+        <style>
+            body {
+                background:
+                {%if media.status == 'approved'%}
+                    forestgreen
+                {% else %}
+                    firebrick
+                {% endif %}
+                ;
+            }
+        </style>
+
+    </head>
+
+    <body >
+
+        
+        <div align="center">
+
+                <table id="customers">
+                    <tr>
+                      <th>Submitted File</th>
+                      <th>Status</th>
+                    </tr>
+                    <tr>
+                      <td>{{media.title}}</td>
+                      <td>{{media.status}}</td>
+                    </tr>
+                  </table>
+                <br>
+
+
+                {% if media.media_type == 'pdf' %}
+                    <embed src="{{ media.file.url }}" type="application/pdf" width=55% height="1000px">
+                {% elif media.media_type == 'image' %}
+                    <!--<embed src="{{ media.file.url}}" alt="{{ media.title }}" width=55%>-->
+                    <div id="game-container" alt="{{ media.title }}"></div>
+                {% endif %}
+                <br>
+               
+
+            {% if not media or media.status != 'approved' or user.groups.all.0.name == "admin_group"%}
+                <form method="post">
+                    {% csrf_token %}
+                    <div width=50%>
+                        <label for="remarks"></label><br>
+                        <textarea id="remarks" name="remarks" rows="4" cols="50" placeholder="Enter Your Remarks Here">{{ media.remarks }}</textarea>
+                    </div>
+                    <br>
+                    <div>
+                    
+                        <button type="submit" name="action" class="button" value="approved">Approve</button>
+                        <button type="submit" name="action" class="button button3"value="rejected">Reject</button>
+                        <a class="button button5" href="#" onClick="closeWindow()">Close Window</a>
+                        <!--<a class="button button5" href="#" onClick="myFunction()">Alert</a>-->
+                    
+                    </div>
+                </form>
+            {% endif %}
+        
+        </div>
+
+    </body>
+</html>

@@ -31,19 +31,26 @@ class NotificationAdmin(admin.ModelAdmin):
                 note.save()
         return super().changelist_view(request,extra_context)
 
-
 class MediaFileAdmin(admin.ModelAdmin):
     list_filter = ('status',)
+    list_display_links = ('title','show_document',)
     #actions = ['approve_files','reject_files']
+   
+    
+    def submitted(self,obj):
+        return obj.title
 
     def get_list_display(self, request):
+  
         default_fields = ('title','user','status','uploaded_at',)
         group_specific_fields = ('show_document',)
-
-        if request.user.groups.filter(name="admin_group").exists():
+        
+        if request.user.groups.filter(name="admin_group").exists() or request.user.is_superuser:
             return default_fields + group_specific_fields
         return default_fields
 
+
+   
 
     def approve_files(self,request,queryset):
         queryset.update(status='approved')
@@ -58,7 +65,7 @@ class MediaFileAdmin(admin.ModelAdmin):
     def get_readonly_fields(self,request,obj=None):
         if not request.user.groups.filter(name="admin_group").exists() or not request.user.is_superuser:
         #if not request.user.is_superuser:
-            return ["status","remarks","user",]
+            return ["status","user",]
         return []
  
     def get_exclude(self,request,obj=...):
@@ -87,7 +94,8 @@ class MediaFileAdmin(admin.ModelAdmin):
     
     def show_document(self,obj):
         '''show a detail of the media that is picked'''
-        return format_html('''<a href="#" onClick="window.open('http://localhost:8000/mediaapp/{0}/detail','_blank')">DISPLAY DOCUMENT</a>'''.format(obj.id))
+        #return format_html('''<a href="#" onClick="window.open('http://localhost:8000/mediaapp/{0}/detail','_blank')">DISPLAY DOCUMENT</a>'''.format(obj.id))
+        return format_html('''<a href="#" onClick="window.open('http://localhost:8000/mediaapp/{0}/form','_blank')">DISPLAY DOCUMENT</a>'''.format(obj.id))
 
     approve_files.short_description = "Approve selected media files"
     reject_files.short_description = "Reject selected media files"

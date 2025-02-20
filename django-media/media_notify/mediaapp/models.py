@@ -17,7 +17,7 @@ class MediaFile(models.Model):
     ]
     title = models.CharField(max_length=255,default="none")
     #content = models.TextField(default="")
-    remarks = models.TextField(default="")
+    remarks = models.TextField(blank=True,null=True)
     user = models.ForeignKey(User,on_delete=models.CASCADE,blank=True,null=True)
     file = models.FileField(upload_to='uploads/')
     uploaded_at = models.DateTimeField(auto_now_add=True)

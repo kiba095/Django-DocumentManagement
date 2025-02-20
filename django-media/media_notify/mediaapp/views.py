@@ -39,3 +39,43 @@ def reject_document(request,doc_id):
     document.save()
     messages.error(request,"The Document has been rejected.")
     return redirect(reverse("admin:mediaapp_mediafile_changelist"))
+
+from .forms import FormSubmissionForm
+
+@login_required
+@user_passes_test(is_approver)
+def form_view(request,detail_id):
+
+    media = MediaFile.objects.filter(id=detail_id).first()
+
+
+    if request.method == 'POST':
+
+        remarks = request.POST.get('remarks','')
+        status = request.POST.get('status')
+        action  = request.POST.get('action')
+
+        if media:
+            media.remarks = remarks
+            media.status = status           
+            if action in ['approved','rejected']: #only update status if action is valid
+                media.status = 'approved' if action=='approved' else 'rejected'
+
+                if media.status == 'approved':
+                    messages.success(request,"The Document: [{0}] has been approved successfully.".format(media.title))
+                    action = 'approved'
+                    
+                else:
+                    messages.error(request,"The Document: [{0}] has been rejected.".format(media.title))
+                    action = 'rejected'
+
+        else:
+
+            media = FormSubmissionForm(
+                remarks = remarks,
+                status = 'pending',
+            )
+        media.save()
+        return redirect(reverse("admin:mediaapp_mediafile_changelist"))
+    
+    return render(request,'mediaapp/form.html',{'media':media})
