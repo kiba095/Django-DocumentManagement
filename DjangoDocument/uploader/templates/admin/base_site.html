@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block title %} Django Admin {% endblock %}</title>
+        {% block extrahead %} {% endblock %}
+    </head>
+    <body>
+        <div id="container">
+            <div id="header">
+                {% block branding %}
+                    <h1>Django Administration</h1>
+                {% endblock %}
+            </div>
+            <div id="content">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,43 @@
+{% extends "admin/base_site.html" %}
+
+
+
+
+{% block content %}
+<div id="content-main">
+
+    <p> This is a custom page inside Django Admin. Remarks will be put here soon</p>
+</div>
+
+
+<div align="center">
+    {% if media.media_type == 'pdf' %}
+    <embed src="{{ media.file.url }}" type="application/pdf" width=55% height="1000px">
+    {% elif media.media_type == 'image' %}
+    <embed src="{{ media.file.url}}" alt="{{ media.title }}" width=55%>
+    <!--<div id="game-container" alt="{{ media.title }}"></div>-->
+    {% endif %}
+    <br><br>
+
+
+<!-- Back Button -->
+<div style="margin-top:20px;">
+    <a href="{% url 'admin:uploader_mediafile_changelist' %}" class="button"> Back to List </a>
+</div>
+<br>
+<div style="margin-top:20px;">
+    <a href="{% url 'admin:uploader_mediafile_changelist' %}" class="button"> Agree Soon</a>
+</div>
+<br>
+<div style="margin-top:20px;">
+    <a href="{% url 'admin:uploader_mediafile_changelist' %}" class="button"> Disagree Soon </a>
+</div>
+{% endblock %}
+
+
+</div>
+<!--
+{% block sidebar %}
+
+{% endblock %}
+-->
