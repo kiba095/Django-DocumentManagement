@@ -17,7 +17,7 @@ The Members of the Commitee will have only on account (the uploaders)
 This users can change their own password in the dashboard(upperright corner).
 This type of scheme is created base sa diagrams.
 
-10,000 php (march 1-15 2025) Phase 1
+(march 1-15 2025) Phase 1
 ^Create diagrams Activity,Sequence and Usecase.
 ^Then those diagrams will be followed for the development of the project.
 ^Create the base_user_dashboard (main body of the webapp).
