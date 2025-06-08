@@ -1,0 +1,23 @@
+{% extends "admin/base.html" %}
+{% load static %}
+{% block title %}
+    {{site_title|default:_("Django site admin")}}
+{% endblock %}
+
+{% block branding %}
+
+    {% if request.path != '/admin/login/' %}
+        <div id="site-name" style="display: flex; align-items:center; gap:12px; padding: 10px 20px;">
+            <img src="{% static 'admin/images/logo.png'%}" alt="Logo" style="height:69px;">
+            <a href="{% url 'admin:index' %}" style="font-size: 1.2em; color:white; text-decoration:none;">
+                {{ site_header|default:_("Django Administration")}}
+            </a>
+        </div>
+    {% else %}
+        {{ block.super}}
+    {% endif %}
+
+{% endblock %}
+
+{% block nav-global%}{% endblock %}
+

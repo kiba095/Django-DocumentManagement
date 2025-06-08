@@ -1,0 +1,21 @@
+{% extends "admin/change_form.html" %}
+{% load i18n %}
+{% block submit_buttons_bottom %}
+
+    <div class= "submit_buttons_bottom">
+        
+        {{ block.super }}
+        <div class=submit-row>
+            <input type="button" value="{% trans '<-- Back To List ' %}" onclick="history.back()" class="default"
+                style="background: #0d6efd; margin-left:5px;color:white"
+            >
+        </div>
+        <!--style="background: #dc3545; margin-left:5px;color:white"-->
+        
+        <!-- <input type="submit" value="Save" class="default">
+        <input type="submit" value="Save and add another" class="default">
+        <input type="submit" value="Save and continue editing" class="default">
+        <a href="{% url 'admin:app_mediafile_changelist' %}" class="cancel">Cancel</a>-->
+    
+    </div>
+{% endblock %}

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title> Print Preview - {{ media.today }} </title>
+        <style>
+            body {
+                font-family: system-ui, sans-serif;
+                font-size: 13px;
+                margin: 40px;
+            }
+            h1 {
+                text-align: center;
+                margin-bottom: 30px;
+                font-size: 18px;
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                border: 1px solid #d8d8d8;
+            }
+            th, td {
+                border: 1px solid #d8d8d8;
+                padding: 8px;
+                text-align: left;
+            }
+            th {
+                background-color: #f2f2f2;
+                font-weight: bold;
+            }
+            tr:nth-child(even) {
+                background-color: #f9f9f9;
+            }
+            tr:hover {
+                background-color: #f1f1f1;
+            }
+            .footer {
+                margin-top: 30px;
+                text-align: right;
+                font-style: italic;
+            }
+            .no-print {
+                margin-bottom: 20px;
+            }
+            @media print {
+                .no-print {
+                    display: none;
+                }
+            }
+            #print-button {
+                margin-bottom: 20px;
+            }
+
+            @media print {
+                #print-button {
+                    display: none;
+                }
+            }   
+            #back-button {
+                padding: 10px 20px;
+                font-size: 14px;
+                background-color: #f0f0f0;
+                border:1px solid #aaa;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+            #back-button:hover {
+                background-color: #e0e0e0;
+            }
+            @media print {
+                #back-button {
+                    display: none;
+                }
+            }
+        </style>
+
+        <script>
+
+            window.addEventListener("DOMContentLoaded",() =>{
+                const options = { year: 'numeric', month: 'long', day: 'numeric' };
+                const today = new Date().toLocaleDateString('en-US', options);
+
+                // Set the page title
+                document.title = today;
+
+                // IF you have an element to display the date 
+                const titleElement = document.getElementById('page-title');
+                if(titleElement) {
+                    titleElement.textContent = `Uploaded Document Lists - ${today}`;
+                }
+            });
+
+            window.addEventListener('load',function() {
+                setTimeout(() => {
+                    window.print();
+                    window.close();
+                }, 500); // Delay to allow the page to render before printing
+            });
+        </script>
+        <body>
+            {% if not selected_objects %}
+            <p>No records selected.</p>
+        {% endif %}
+
+        <h1 align="center" id="page-title">Selected Documents</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Content Title</th>
+                    <th>Committee Group</th>
+                    <th>File Format</th>
+                    <th> Status</th>
+                    <th> Last Updated </th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for obj in selected_objects %}
+                <tr>
+                    <td> {{ obj.title }}</td>
+                    <td> {{ obj.user }}</td>
+                    <td> {{ obj.media_type }}</td>
+                    <td> {{ obj.status }}</td>
+                    <td> {{ obj.uploaded_at }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div style="margin-top: 30px;" align="center">
+            <button onclick="window.history.back()" id="back-button">Back to List</button>
+        </div>
+        </body>

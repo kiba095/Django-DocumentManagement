@@ -1,0 +1,8 @@
+^̶C̶r̶e̶a̶t̶e̶ ̶w̶e̶b̶a̶p̶p̶ ̶a̶d̶m̶i̶n̶-̶i̶n̶t̶e̶r̶f̶a̶c̶e̶-̶c̶u̶s̶t̶o̶m̶ ̶t̶e̶m̶p̶l̶a̶t̶e̶ ̶f̶o̶r̶ ̶c̶u̶s̶t̶o̶m̶i̶z̶a̶t̶i̶o̶n̶ ̶o̶f̶ ̶i̶t̶s̶ ̶u̶i̶,̶ ̶r̶a̶t̶h̶e̶r̶ ̶t̶h̶a̶n̶ ̶c̶o̶d̶e̶-̶i̶t̶ m̶a̶n̶u̶a̶l̶l̶y̶ ̶(̶w̶o̶r̶d̶p̶r̶e̶s̶s̶ ̶c̶m̶s̶ ̶a̶l̶i̶k̶e̶)̶ 
+̶^̶C̶r̶e̶a̶t̶e̶ ̶a̶ ̶d̶o̶c̶u̶m̶e̶n̶t̶_̶l̶i̶s̶t̶_̶p̶a̶g̶e̶'̶s̶ ̶i̶m̶p̶o̶r̶t̶/̶e̶x̶p̶o̶r̶t̶ ̶p̶l̶u̶g̶i̶n̶ ̶i̶n̶ ̶j̶s̶o̶n̶ ̶o̶r̶ ̶c̶s̶v̶ ̶f̶o̶r̶m̶a̶t̶(̶f̶o̶r̶ ̶d̶a̶t̶a̶ ̶f̶i̶e̶l̶d̶ b̶a̶c̶k̶u̶p̶s̶)̶.̶
+̶^̶C̶r̶e̶a̶t̶e̶ ̶a̶ ̶d̶o̶c̶u̶m̶e̶n̶t̶_̶l̶i̶s̶t̶_̶p̶a̶g̶e̶'̶s̶ ̶a̶p̶p̶r̶o̶v̶e̶d̶_̶f̶i̶l̶e̶s̶_̶d̶o̶w̶n̶l̶o̶a̶d̶e̶r̶ ̶p̶l̶u̶g̶i̶n̶ ̶i̶f̶ ̶a̶d̶m̶i̶n̶ ̶w̶a̶n̶t̶s̶ ̶t̶o̶ ̶d̶o̶w̶n̶l̶o̶a̶d̶ t̶h̶e̶ ̶a̶p̶p̶r̶o̶v̶e̶d̶ ̶m̶e̶d̶i̶a̶ ̶d̶o̶c̶u̶m̶e̶n̶t̶s̶.̶
+̶^̶C̶r̶e̶a̶t̶e̶ ̶a̶ ̶d̶o̶c̶u̶m̶e̶n̶t̶_̶l̶i̶s̶t̶_̶p̶a̶g̶e̶'̶s̶ ̶m̶u̶l̶t̶i̶p̶l̶e̶ ̶a̶p̶p̶r̶o̶v̶e̶d̶/̶d̶i̶s̶a̶a̶p̶r̶o̶v̶e̶d̶ ̶p̶l̶u̶g̶i̶n̶ ̶f̶o̶r̶ ̶m̶a̶s̶s̶ ̶c̶h̶a̶n̶g̶e̶,̶i̶n̶s̶t̶e̶a̶d̶ o̶f̶ ̶o̶n̶e̶-̶b̶y̶-̶o̶n̶e̶ ̶n̶e̶w̶t̶a̶b̶ ̶a̶p̶p̶r̶o̶v̶e̶
+̶^̶C̶r̶e̶a̶t̶e̶ ̶a̶ ̶d̶o̶c̶u̶m̶e̶n̶t̶_̶l̶i̶s̶t̶_̶p̶a̶g̶e̶'̶s̶ ̶s̶e̶a̶r̶c̶h̶_̶f̶i̶e̶l̶d̶ ̶p̶l̶u̶g̶i̶n̶ ̶w̶h̶e̶r̶e̶ ̶a̶d̶m̶i̶n̶/̶p̶r̶i̶n̶c̶i̶p̶a̶l̶ ̶c̶a̶n̶ ̶s̶e̶a̶r̶c̶h̶ u̶s̶e̶r̶n̶a̶m̶e̶,̶t̶i̶t̶l̶e̶_̶o̶f̶_̶d̶o̶c̶u̶m̶e̶n̶t̶,̶u̶p̶l̶o̶a̶d̶e̶d̶_̶d̶a̶t̶e̶.̶
+̶^̶C̶r̶e̶a̶t̶e̶ ̶a̶ ̶d̶o̶c̶u̶m̶e̶n̶t̶_̶l̶i̶s̶t̶_̶p̶a̶g̶e̶'̶s̶ ̶f̶i̶l̶t̶e̶r̶_̶b̶y̶_̶t̶y̶p̶e̶ ̶b̶e̶s̶i̶d̶e̶s̶ ̶t̶h̶e̶ ̶a̶p̶p̶r̶o̶v̶e̶d̶_̶d̶i̶s̶a̶p̶p̶r̶o̶v̶e̶_̶p̶e̶n̶d̶i̶n̶g̶ ̶f̶i̶l̶t̶e̶r̶.̶
+̶^̶C̶r̶e̶a̶t̶e̶ ̶a̶ ̶d̶j̶a̶n̶g̶o̶-̶f̶a̶k̶e̶ ̶l̶o̶g̶i̶n̶ ̶f̶o̶r̶ ̶s̶e̶c̶u̶r̶i̶t̶y̶ ̶p̶u̶r̶p̶o̶s̶e̶s̶
+̶^̶C̶r̶e̶a̶t̶e̶ ̶a̶ ̶n̶e̶w̶ ̶r̶o̶l̶e̶ ̶n̶a̶m̶e̶d̶ ̶s̶u̶p̶e̶r̶a̶d̶m̶i̶n̶ ̶w̶h̶e̶r̶e̶ ̶i̶t̶ ̶h̶a̶s̶ ̶a̶c̶c̶e̶s̶s̶ ̶t̶o̶ ̶a̶l̶l̶ ̶d̶a̶t̶a̶ ̶a̶n̶d̶ ̶c̶a̶n̶ a̶d̶d̶.̶d̶e̶l̶e̶t̶e̶.̶u̶p̶d̶a̶t̶e̶ ̶u̶s̶e̶r̶ ̶i̶n̶f̶o̶r̶m̶a̶t̶i̶o̶n̶s̶.̶

@@ -1,0 +1,72 @@
+{% extends "admin/base_site.html"%}
+{% load static %}
+{% load custom_tags %}
+
+
+{% block branding %}
+
+    <div id="site-name">
+        <a href="{% url 'admin:index' %}">
+            {{ site_header|default:_("Django Administration")}}
+        </a>
+    </div>
+
+{% endblock%}
+
+{% block welcome-msg %}
+    <p class="usr" style="font-size:15px;">&#128512; Welcome, <strong style="font-weight:bold;"> {% firstof user.get_short_name  %}</strong></p>
+
+{% endblock %}
+
+{% block userlinks %}
+    <!--<a href="#">WELCOME</a>/-->
+
+    {% if request.user.is_authenticated %}
+    
+    <a href="{% url 'admin:app_mediafile_changelist'%}"class="notifications">
+        &#128195;
+        UPLOADED DOCUMENTS
+    </a>
+  
+ 
+    <!--{{ block.super }} remove default navigation links-->
+
+    <a href="{% url 'admin:app_notification_changelist' %}" class="notifications">
+    
+        &#128276;
+        Notifications
+        <span class="badge">{% get_notification_count request.user.username %}</span>
+    </a>
+    
+    <a href="{% url 'admin:password_change'%}"class="notifications">&#128273; CHANGE PASSWORD</a>
+   
+    <a onclick="document.getElementById('logoutForm').submit(); return false;" class="notifications"> &#128682; LOG-OUT</a>
+    <form id="logoutForm" action="{% url 'admin:logout'%}" method="post">
+        {% csrf_token %}
+    </form>
+    
+    {% endif %}
+
+    <style>
+        .notifications {
+            margin-left:15px;
+            font-weight:bold;
+            color:red;
+        }
+        {% if get_notification_count > 0 %}
+        .badge {
+            background-color:red;
+            color:white;
+            border-radius:50%;
+            padding: 2px 6px;
+            font-size: 12px;
+        }
+        .usr {
+            color: white;
+            font-weight:bold;
+            font-size: 33px;
+        }
+        {% endif %}
+    </style>
+
+{% endblock %}
